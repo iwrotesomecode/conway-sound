@@ -1,0 +1,43 @@
+        * {
+             --textsize: 16px;
+             --bgcolor: rgb(16,16,16); /* #101010; */
+             --textcolor: rgb(240,240,240); /* #f0f0f0; */
+             --cell1a: rgba(47,243,224, 0.7); /* #2ff3e0; */
+             --cell1b: rgba(19,167,153, 0.7);/* #0F897D; */
+             --cell2a: rgba(248,210,16, 0.7);/* #f8d210; */
+             --cell2b: rgba(166,142,21, 0.7);/* #A68E15; */
+             --cell3a: rgba(250,38,160, 0.7);/* #fa26a0; */
+             --cell3b: rgba(126,11,76, 0.7);/* #7E0B4C; */
+         }
+         body{max-width:650px;
+             margin:40px auto;
+             padding:0 10px;
+             font: var(--textsize)/1.35 system-ui, sans-serif;
+             color: var(--textcolor);
+             background: var(--bgcolor);
+         }
+         h1,h2,h3{line-height:1.2}
+         /* @media (prefers-color-scheme: dark){body{color:#ccc;background:black}a:link{color:#5bf}a:visited{color:#ccf}} */
+         .slider {
+             cursor: pointer;
+             opacity: 0.7;
+             transition: opacity 0.2s;
+         }
+         .slider:hover {
+             opacity: 1;
+         }
+         .controls ~ button, .slider {
+             display: inline-block;
+         }
+        .container {
+            position: relative;
+        }
+
+        .container > canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #canvas-1, #canvas-2, #canvas-3 {
+            background-color: transparent;
+        }

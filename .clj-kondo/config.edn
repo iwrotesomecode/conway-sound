@@ -1,0 +1,2 @@
+{:lint-as {helix.core/defnc clojure.core/defn}
+ :linters {:unresolved-symbol {:exclude [(helix.core/$) (helix.core/<>)]}}}

@@ -1,0 +1,24 @@
+;; shadow-cljs configuration
+{:source-paths
+ ["src/main"
+  "src/test"
+  "src/js"]
+
+ :dependencies
+ [[cider/cider-nrepl "0.27.2"]
+  [lilactown/helix "0.1.6"]]
+
+ :nrepl {:port 9000
+         :init-ns conway.app}
+ :dev-http {8000 "public"}
+ :builds
+ {:app                              ;; name of build
+  {:target :browser                 ;; target the browser
+   :compiler-options {:output-feature-set :es6}
+   :output-dir "public/js"      ;; output js files here
+   :asset-path "/js"            ;; used to construct the URL
+   :modules {:main                  ;; we need one module
+               ;; start `counter.app/init` when the JS loads
+             {:init-fn conway.app/init}
+             ;;{:entries [conway.app]}
+             }}}}
