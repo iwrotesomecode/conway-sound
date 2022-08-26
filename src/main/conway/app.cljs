@@ -233,7 +233,7 @@
 (def intervalID-3 (atom nil))
 (def timeout-1 (atom nil))
 (def timeout-2 (atom nil))
-(def transition-time 900)
+(def transition-time 800)
 (defn game-loop-1 []
   ;; (js/console.log @counter)
   (when (= @counter 33) (reset! board-1 glider-2b))
@@ -251,15 +251,22 @@
 
 (defn game-loop-2 []
   (draw-board-2 game-2)
+  (wa/processNotes (clj->js (deref (:board game-2))))
   (next-gen game-2))
 
 (defn game-loop-3 []
   (draw-board-2 game-3)
   (next-gen game-3))
 
+(def volume (.getElementById js/document "volume"))
+
+(defn update-gain []
+  (wa/updateGain (clj->js (.-value volume))))
+
 (defn begin []
   (js/console.log "begin again")
   (wa/initAudio)
+  (update-gain)
   (wa/play)
   (set! (.-disabled (.getElementById js/document "stop")) false)
   (set! (.-disabled (.getElementById js/document "start")) true)
@@ -305,18 +312,16 @@
 ;;           ;; (d/canvas {:id "canvas-2" :width (:width canvas-properties) :height (:height canvas-properties)})
 ;;           ;; (d/canvas {:id "canvas-3" :width (:width canvas-properties) :height (:height canvas-properties)})
 ;;           )))
-(def volume (.getElementById js/document "volume"))
-
-(defn update-gain []
-  (wa/updateGain (clj->js (.-value volume))))
-
 (defn ^:export init []
   ;;(dom/render ($ app) (js/document.getElementById "app"))
   (set! (.-disabled (.getElementById js/document "stop")) true)
+  (set! (.-disabled (.getElementById js/document "start")) true)
   (.addEventListener (.getElementById js/document "start") "click" begin)
   (.addEventListener (.getElementById js/document "stop") "click" end)
   (.addEventListener volume "input" update-gain)
   (set! (.-fillStyle (:ctx canvas-1)) "rgb(30,30,30)")
   (.beginPath (:ctx canvas-1))
   (.arc (:ctx canvas-1) (/ height 2) (/ height 2)  (/ height 2) 0 (* 2 js/Math.PI))
-  (.fill (:ctx canvas-1)))
+  (.fill (:ctx canvas-1))
+  (wa/initBuffer)
+  (set! (.-disabled (.getElementById js/document "start")) false))
