@@ -1,18 +1,7 @@
-//const AudioContext = new window.AudioContext || window.webkitAudioContext
 const context = new AudioContext()
 // context.audioWorklet.addModule('Worklets.js').then(() => {
 //   var Noise = new AudioWorkletNode(context, 'Noise');
 // });
-
-// const kick = () => { }
-// https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/decodeAudioData
-const getSample = async (url, callback) => {
-  audioBuffer = await fetch(url)
-    .then((response) => response.arrayBuffer())
-    .then((arrayBuffer) => audioCtx.decodeAudioData(arrayBuffer))
-  callback(audioBuffer)
-}
-
 //const drumSample = "samples/353323__gunnbladez__100-distorto-drums-01.wav"
 
 const _hihat = "samples/kit3/hihat.wav"
@@ -90,9 +79,7 @@ var oscNode = []
   , masterGainNode
   , gainNode = []
   , frequency = []
-  , prevFrequency = []
   , clipFilter = []
-  , panNode = []
   , lop
   , hip
   , delay
@@ -154,12 +141,6 @@ const play = () => {
   if (context.state === "suspended") context.resume();
   masterGainNode.connect(context.destination)
 }
-
-for (let i = 0; i < oscNode.length; i++) {
-  panNode[i] = context.StereoPanner();
-  panNode[i].pan.value = 0; // -1, 1
-}
-
 
 const stop = () => {
   if (oscNode.length !== 0) {
@@ -243,26 +224,12 @@ const processNotes256 = (array) => {
   }
 }
 
-const idxToUpdate = (OldArray, NewArray) => {
-
-}
-
-const idxRemainSame = (OldArray, NewArray) => {
-
-}
-
-const idxToRemove = (OldArray, NewArray) => {
-
-}
-
 const updateOsc = (array) => {
   for (let i = 0; i < Math.min(array.length, oscNode.length); ++i) {
     oscNode[i].frequency.exponentialRampToValueAtTime(array[i], context.currentTime + 0.3)
     //oscNode[i].frequency.setValueAtTime(array[i], context.currentTime + 0.3)
   }
 }
-
-
 
 const updateGain = (value) => {
   masterGainNode.gain.value = parseFloat(value)
@@ -278,21 +245,6 @@ const updateOscType = (type) => {
   for (let i = 0; i < oscNode.length; ++i) {
     oscNode[i].type = type
   }
-}
-
-// get just frequencies from array
-const difference = (setA, setB) => {
-  let diff = new Set(setA)
-  for (let element of setB) {
-    diff.delete(element)
-  }
-  return diff
-}
-
-const compareFrequency = (oldArray, newArray) => {
-  // for osc in oscillators, check if osc.frequency.value =
-  let uniqueInNew = difference(oldArray, newArray)
-  let uniqueInOld = difference(newArray, oldArray)
 }
 
 export { play, processNotes, updateGain, updateOsc, initAudio, stop, updateLop, updateOscType, initBuffer }

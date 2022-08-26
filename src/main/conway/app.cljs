@@ -264,7 +264,6 @@
   (wa/updateGain (clj->js (.-value volume))))
 
 (defn begin []
-  (js/console.log "begin again")
   (wa/initAudio)
   (update-gain)
   (wa/play)
@@ -272,13 +271,12 @@
   (set! (.-disabled (.getElementById js/document "start")) true)
   (game-loop-1)
   (reset! intervalID-1 (.setInterval js/window game-loop-1 transition-time))
-  (reset! timeout-1 (-> (fn [] (reset! intervalID-2 (.setInterval js/window game-loop-2 (/ transition-time 3))))
-                        (js/setTimeout 33000)))
+  (reset! timeout-1 (-> (fn [] (reset! intervalID-2 (.setInterval js/window game-loop-2 (/ transition-time 4))))
+                        (js/setTimeout (* 16 transition-time)))) ;;33000
   (reset! timeout-2 (-> (fn [] (reset! intervalID-3 (.setInterval js/window game-loop-3 (/ transition-time 16))))
-                        (js/setTimeout 61000))))
+                        (js/setTimeout (* 65 transition-time))))) ;; 61000
 
 (defn end []
-  (js/console.log "ending!")
   (.clearInterval js/window @intervalID-1)
   (.clearInterval js/window @intervalID-2)
   (.clearInterval js/window @intervalID-3)
