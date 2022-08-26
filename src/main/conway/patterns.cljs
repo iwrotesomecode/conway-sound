@@ -129,3 +129,86 @@
                  0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0
                  0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0
                  0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0])
+;; (def glider [0 0 1 0
+;;              1 0 1 0
+;;              0 1 1 0
+;;              0 0 0 0])
+
+;; This can be a fun transition with Min7/Maj3
+(def glider-2a [1 0 0 0
+                0 0 0 0
+                0 1 0 1
+                1 0 0 0])
+;; (def glider [0 0 0 0
+;;              0 0 0 1
+;;              0 1 0 1
+;;              0 0 1 1])
+
+;; this is interesting with maj/min third, 3/2, 6/5
+;; eerie transition with 5/4, 15/8 too P5/Maj7 -- similarish with 5/4, 3/2
+;; (def glider [1 1 0 0
+;;              0 1 0 0
+;;              1 1 0 0
+;;              0 0 0 0])
+
+;; (def glider [0 0 0 0
+;;              1 1 0 0
+;;              0 1 0 0
+;;              1 1 0 0])
+
+;; default?
+;; (def glider [1 0 1 0
+;;              0 1 1 0
+;;              0 0 0 0
+;;              0 0 1 0])
+
+;; (def glider [0 1 1 0
+;;              0 0 0 0
+;;              0 0 1 0
+;;              1 0 1 0])
+
+;; only survives about 5 generations
+;; (def glider-death [0 1 0 0
+;;                    0 0 1 1
+;;                    0 1 0 0
+;;                    0 0 0 1])
+
+;; it's nice with Min7, Maj3, 7/4 3/2
+(def glider-1a [1 0 1 0
+                1 1 1 0
+                0 0 0 0
+                0 0 0 0])
+
+(def glider-1b [0 1 0 1
+                0 1 1 1
+                0 0 0 0
+                0 0 0 0])
+
+(def glider-1c [0 0 0 0
+                0 0 0 0
+                1 0 1 0
+                1 1 1 0])
+(def glider-1d [0 0 0 0
+                1 0 1 0
+                1 1 1 0
+                0 0 0 0])
+
+;; fun 6-cycle pattern, but then needs a change
+;; (def glider-1e [0 0 0 1
+;;                 0 0 0 1
+;;                 0 0 1 1
+;;                 0 0 0 0])
+;; (def glider-1e [0 1 1 1
+;;                 0 0 0 1
+;;                 0 1 0 0
+;;                 0 0 0 0])
+
+;; (def glider-1e [0 0 0 0
+;;                 0 1 0 0
+;;                 0 0 0 1
+;;                 0 1 1 1])
+
+(def glider-2b [0 0 0 0
+                0 1 0 0
+                0 1 0 0
+                1 0 1 0])

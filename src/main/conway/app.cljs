@@ -4,7 +4,7 @@
             ;; [helix.dom :as d]
             ;; ["react-dom" :as dom]
    [clojure.string :as str]
-   [conway.patterns :refer [copperhead lobster]]
+   [conway.patterns :refer [copperhead lobster glider-1a glider-1b glider-2a glider-2b]]
    ;; [conway.random :refer [random]]
    ["/conway/audio" :as wa]))
 
@@ -36,90 +36,6 @@
   (let [row-width (/ height res)
         col-height (/ height res)]
     (vec (repeatedly (* row-width col-height) #(rand-int 2)))))
-;; (def glider [0 0 1 0
-;;              1 0 1 0
-;;              0 1 1 0
-;;              0 0 0 0])
-
-;; This can be a fun transition with Min7/Maj3
-(def glider-2a [1 0 0 0
-                0 0 0 0
-                0 1 0 1
-                1 0 0 0])
-;; (def glider [0 0 0 0
-;;              0 0 0 1
-;;              0 1 0 1
-;;              0 0 1 1])
-
-;; this is interesting with maj/min third, 3/2, 6/5
-;; eerie transition with 5/4, 15/8 too P5/Maj7 -- similarish with 5/4, 3/2
-;; (def glider [1 1 0 0
-;;              0 1 0 0
-;;              1 1 0 0
-;;              0 0 0 0])
-
-;; (def glider [0 0 0 0
-;;              1 1 0 0
-;;              0 1 0 0
-;;              1 1 0 0])
-
-;; default?
-;; (def glider [1 0 1 0
-;;              0 1 1 0
-;;              0 0 0 0
-;;              0 0 1 0])
-
-;; (def glider [0 1 1 0
-;;              0 0 0 0
-;;              0 0 1 0
-;;              1 0 1 0])
-
-;; only survives about 5 generations
-;; (def glider-death [0 1 0 0
-;;                    0 0 1 1
-;;                    0 1 0 0
-;;                    0 0 0 1])
-
-;; it's nice with Min7, Maj3, 7/4 3/2
-(def glider-1a [1 0 1 0
-                1 1 1 0
-                0 0 0 0
-                0 0 0 0])
-
-(def glider-1b [0 1 0 1
-                0 1 1 1
-                0 0 0 0
-                0 0 0 0])
-
-(def glider-1c [0 0 0 0
-                0 0 0 0
-                1 0 1 0
-                1 1 1 0])
-(def glider-1d [0 0 0 0
-                1 0 1 0
-                1 1 1 0
-                0 0 0 0])
-
-;; fun 6-cycle pattern, but then needs a change
-;; (def glider-1e [0 0 0 1
-;;                 0 0 0 1
-;;                 0 0 1 1
-;;                 0 0 0 0])
-;; (def glider-1e [0 1 1 1
-;;                 0 0 0 1
-;;                 0 1 0 0
-;;                 0 0 0 0])
-
-;; (def glider-1e [0 0 0 0
-;;                 0 1 0 0
-;;                 0 0 0 1
-;;                 0 1 1 1])
-
-(def glider-2b [0 0 0 0
-                0 1 0 0
-                0 1 0 0
-                1 0 1 0])
-
 (def board-1 (atom glider-1a))
 (def board-2 (atom copperhead))
 (def board-3 (atom lobster))
@@ -204,7 +120,7 @@
         :else (set! (.-fillStyle ctx) color-1))
       (.fillRect ctx (* col res) (* row res) res res))))
 
-(defn draw-board-2
+(defn draw-board-arc
   [game]
   (let [canvas (:canvas game)
         ctx (:ctx canvas)
@@ -244,18 +160,18 @@
         (wa/updateLop 600))
   (when (= @counter 140) (reset! counter 0) (reset! board-1 glider-1a)
         (wa/updateLop 4000))
-  (draw-board-2 game-1)
+  (draw-board-arc game-1)
   (wa/processNotes (clj->js (deref (:board game-1))))
   (next-gen game-1)
   (swap! counter inc))
 
 (defn game-loop-2 []
-  (draw-board-2 game-2)
+  (draw-board-arc game-2)
   (wa/processNotes (clj->js (deref (:board game-2))))
   (next-gen game-2))
 
 (defn game-loop-3 []
-  (draw-board-2 game-3)
+  (draw-board-arc game-3)
   (next-gen game-3))
 
 (def volume (.getElementById js/document "volume"))
